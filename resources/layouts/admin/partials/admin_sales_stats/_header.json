@@ -1,0 +1,411 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매 통계 — 제목 · 기간 · 새로고침 · CSV"
+  },
+  "id": "sales_stats_header",
+  "type": "basic",
+  "name": "Div",
+  "props": {
+    "className": "flex items-start justify-between gap-4 flex-wrap"
+  },
+  "children": [
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "min-w-0"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "chart-line",
+                "className": "text-blue-600 dark:text-blue-400"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "H1",
+              "props": {
+                "className": "text-2xl font-bold text-gray-900 dark:text-white"
+              },
+              "text": "$t:custom-sales_stats.title"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-2 flex-wrap mt-1 text-sm text-gray-500 dark:text-gray-400"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "calendar"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{(((meta && meta.data && meta.data.filters) || {}).from || '') + ' ~ ' + (((meta && meta.data && meta.data.filters) || {}).to || '')}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{((meta && meta.data && meta.data.filters) || {}).granularity === 'week' ? '$t:custom-sales_stats.granularity.week' : (((meta && meta.data && meta.data.filters) || {}).granularity === 'month' ? '$t:custom-sales_stats.granularity.month' : (((meta && meta.data && meta.data.filters) || {}).granularity === 'year' ? '$t:custom-sales_stats.granularity.year' : '$t:custom-sales_stats.granularity.day'))}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{((meta && meta.data && meta.data.filters) || {}).timezone || 'Asia/Seoul'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "text": "$t:custom-sales_stats.filters.compare_with"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "text": "{{(((meta && meta.data && meta.data.filters) || {}).previous && ((meta && meta.data && meta.data.filters) || {}).previous.from) + ' ~ ' + (((meta && meta.data && meta.data.filters) || {}).previous && ((meta && meta.data && meta.data.filters) || {}).previous.to)}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "flex items-center gap-2 flex-wrap"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Button",
+          "if": "{{(query.tab || 'overview') === 'overview'}}",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700",
+            "title": "$t:custom-sales_stats.common.refresh"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "rotate"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.common.refresh"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "sequence",
+              "actions": [
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "meta"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "overview"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700",
+            "title": "$t:custom-sales_stats.common.refresh"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "rotate"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.common.refresh"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "sequence",
+              "actions": [
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "meta"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoSummary"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoSeries"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoProducts"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoCategories"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoBuyers"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "ecoBreakdowns"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "if": "{{(query.tab || 'overview') === 'market'}}",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700",
+            "title": "$t:custom-sales_stats.common.refresh"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "rotate"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.common.refresh"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "sequence",
+              "actions": [
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "meta"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkSummary"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkSeries"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkSellers"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkListings"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkBuyers"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkBreakdowns"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "mkSettlements"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+          "props": {
+            "className": "flex items-center"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Button",
+              "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+              "props": {
+                "type": "button",
+                "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                "title": "$t:custom-sales_stats.common.csv_hint"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "download"
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "text": "$t:custom-sales_stats.common.csv_period"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "downloadAttachment",
+                  "params": {
+                    "url": "{{'/api/modules/custom-sales_stats/export?scope=ecommerce&dataset=period&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                    "filename": "{{'sales_stats_ecommerce_period_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "if": "{{(query.tab || 'overview') === 'market'}}",
+          "props": {
+            "className": "flex items-center"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Button",
+              "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+              "props": {
+                "type": "button",
+                "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                "title": "$t:custom-sales_stats.common.csv_hint"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "download"
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "text": "$t:custom-sales_stats.common.csv_period"
+                }
+              ],
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "downloadAttachment",
+                  "params": {
+                    "url": "{{'/api/modules/custom-sales_stats/export?scope=market&dataset=period&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                    "filename": "{{'sales_stats_market_period_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

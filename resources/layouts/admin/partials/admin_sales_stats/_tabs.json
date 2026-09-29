@@ -1,0 +1,32 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매 통계 — 탭 (서버 meta.tabs 기준, 비활성 모듈 탭 숨김)"
+  },
+  "id": "sales_stats_tabs",
+  "type": "composite",
+  "name": "TabNavigation",
+  "props": {
+    "tabs": "{{((meta && meta.data && meta.data.tabs) || [])}}",
+    "activeTabId": "{{(query.tab || 'overview')}}",
+    "variant": "underline"
+  },
+  "actions": [
+    {
+      "event": "onTabChange",
+      "type": "change",
+      "handler": "navigate",
+      "params": {
+        "path": "/admin/sales-stats",
+        "mergeQuery": true,
+        "query": {
+          "tab": "{{$args[0]}}",
+          "page": "",
+          "q": "",
+          "sort": "",
+          "dir": ""
+        }
+      }
+    }
+  ]
+}

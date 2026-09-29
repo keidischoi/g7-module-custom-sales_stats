@@ -1,21 +1,34 @@
 {
-    "identifier": "sirsoft-sales_stats",
-    "vendor": "sirsoft",
+    "identifier": "custom-sales_stats",
+    "vendor": "custom",
     "name": {
         "ko": "판매 통계",
         "en": "Sales Statistics"
     },
-    "version": "1.4.1",
+    "version": "2.0.0",
     "license": "MIT",
     "description": {
-        "ko": "이커머스 모듈 확장 — 일별·월별·연간 × 상품별·카테고리별 판매 통계",
-        "en": "Ecommerce module extension — sales stats by period, product, category"
+        "ko": "이커머스와 개인 마켓의 판매 통계를 탭으로 나눠 보여 줍니다. 기간 비교, 상품·카테고리·구매자·판매자 순위, 판매자 상세, 정산 현황, 회원 정보·쪽지 연결, CSV 내보내기를 제공합니다. 다른 모듈의 데이터는 읽기만 합니다.",
+        "en": "Sales dashboards for Ecommerce and User Markets in separate tabs: period comparison, product/category/buyer/seller rankings, seller detail, settlement status, member & note links and CSV export. Other modules are read-only."
     },
-    "g7_version": ">=7.0.0",
-    "github_url": "https://github.com/keidischoi/sirsoft-sales_stats",
+    "g7_version": ">=7.0.7",
+    "github_url": "https://github.com/keidischoi/g7-module-custom-sales_stats",
+    "github_changelog_url": "https://github.com/keidischoi/g7-module-custom-sales_stats/blob/main/CHANGELOG.md",
     "dependencies": {
         "modules": {
             "sirsoft-ecommerce": ">=1.0.0"
-        }
+        },
+        "plugins": {}
+    },
+    "assets": {
+        "js": {
+            "entry": "resources/assets/module.js",
+            "output": "dist/js/module.iife.js"
+        },
+        "handlers": true
+    },
+    "loading": {
+        "strategy": "global",
+        "priority": 120
     }
 }

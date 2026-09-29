@@ -1,0 +1,469 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매 통계 — 기간 · 기준 · 조건"
+  },
+  "type": "basic",
+  "name": "Div",
+  "props": {
+    "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 flex flex-col gap-3"
+  },
+  "children": [
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "flex items-center gap-2 flex-wrap"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Span",
+          "props": {
+            "className": "text-xs text-gray-500 dark:text-gray-400 font-medium"
+          },
+          "text": "$t:custom-sales_stats.filters.period"
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "iteration": {
+            "source": "{{((meta && meta.data && meta.data.presets) || [])}}",
+            "item_var": "p",
+            "index_var": "pi"
+          },
+          "props": {
+            "type": "button",
+            "className": "{{p.key === ((meta && meta.data && meta.data.filters) || {}).preset ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+          },
+          "text": "{{p.label}}",
+          "actions": [
+            {
+              "type": "click",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "from": "{{p.from}}",
+                  "to": "{{p.to}}",
+                  "granularity": "{{p.granularity}}",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "flex items-center gap-3 flex-wrap"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Input",
+              "props": {
+                "type": "date",
+                "className": "input w-40",
+                "value": "{{query.from || ((meta && meta.data && meta.data.filters) || {}).from || ''}}"
+              },
+              "actions": [
+                {
+                  "type": "change",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "from": "{{$event.target.value}}",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "text-gray-400"
+              },
+              "text": "~"
+            },
+            {
+              "type": "basic",
+              "name": "Input",
+              "props": {
+                "type": "date",
+                "className": "input w-40",
+                "value": "{{query.to || ((meta && meta.data && meta.data.filters) || {}).to || ''}}"
+              },
+              "actions": [
+                {
+                  "type": "change",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "to": "{{$event.target.value}}",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-1 flex-wrap"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Button",
+              "props": {
+                "type": "button",
+                "className": "{{(((meta && meta.data && meta.data.filters) || {}).granularity || 'day') === 'day' ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+              },
+              "text": "$t:custom-sales_stats.granularity.day",
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "granularity": "day",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Button",
+              "props": {
+                "type": "button",
+                "className": "{{(((meta && meta.data && meta.data.filters) || {}).granularity || 'day') === 'week' ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+              },
+              "text": "$t:custom-sales_stats.granularity.week",
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "granularity": "week",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Button",
+              "props": {
+                "type": "button",
+                "className": "{{(((meta && meta.data && meta.data.filters) || {}).granularity || 'day') === 'month' ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+              },
+              "text": "$t:custom-sales_stats.granularity.month",
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "granularity": "month",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Button",
+              "props": {
+                "type": "button",
+                "className": "{{(((meta && meta.data && meta.data.filters) || {}).granularity || 'day') === 'year' ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+              },
+              "text": "$t:custom-sales_stats.granularity.year",
+              "actions": [
+                {
+                  "type": "click",
+                  "handler": "navigate",
+                  "params": {
+                    "path": "/admin/sales-stats",
+                    "mergeQuery": true,
+                    "query": {
+                      "granularity": "year",
+                      "page": ""
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Select",
+          "props": {
+            "className": "w-48",
+            "value": "{{query.basis || 'paid'}}",
+            "options": [
+              {
+                "value": "paid",
+                "label": "$t:custom-sales_stats.filters.basis_paid"
+              },
+              {
+                "value": "confirmed",
+                "label": "$t:custom-sales_stats.filters.basis_confirmed"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "change",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "basis": "{{$event.target.value}}",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "props": {
+            "type": "button",
+            "className": "{{((meta && meta.data && meta.data.filters) || {}).compare ? 'px-3 py-1 text-sm rounded-full border border-blue-600 bg-blue-600 text-white' : 'px-3 py-1 text-sm rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'}}"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "code-compare"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.filters.compare"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "compare": "{{((meta && meta.data && meta.data.filters) || {}).compare ? '0' : '1'}}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "P",
+      "if": "{{!!((meta && meta.data && meta.data.filters) || {}).requested_granularity && ((meta && meta.data && meta.data.filters) || {}).requested_granularity !== ((meta && meta.data && meta.data.filters) || {}).granularity}}",
+      "props": {
+        "className": "text-xs text-amber-600 dark:text-amber-400"
+      },
+      "text": "$t:custom-sales_stats.filters.granularity_adjusted"
+    },
+    {
+      "type": "basic",
+      "name": "P",
+      "props": {
+        "className": "text-xs text-gray-400 dark:text-gray-500"
+      },
+      "text": "$t:custom-sales_stats.filters.basis_help"
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "props": {
+        "className": "flex items-center gap-3 flex-wrap pt-3 border-t border-gray-200 dark:border-gray-700"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Span",
+          "props": {
+            "className": "text-xs text-gray-500 dark:text-gray-400 font-medium"
+          },
+          "text": "$t:custom-sales_stats.filters.market"
+        },
+        {
+          "type": "basic",
+          "name": "Select",
+          "props": {
+            "className": "w-40",
+            "value": "{{query.type || ''}}",
+            "options": [
+              {
+                "value": "",
+                "label": "$t:custom-sales_stats.filters.type_all"
+              },
+              {
+                "value": "physical",
+                "label": "$t:custom-sales_stats.filters.type_physical"
+              },
+              {
+                "value": "digital",
+                "label": "$t:custom-sales_stats.filters.type_digital"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "change",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "type": "{{$event.target.value}}",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Select",
+          "props": {
+            "className": "w-40",
+            "value": "{{query.payment_mode || ''}}",
+            "options": [
+              {
+                "value": "",
+                "label": "$t:custom-sales_stats.filters.payment_mode_all"
+              },
+              {
+                "value": "escrow",
+                "label": "$t:custom-sales_stats.filters.payment_mode_escrow"
+              },
+              {
+                "value": "direct",
+                "label": "$t:custom-sales_stats.filters.payment_mode_direct"
+              }
+            ]
+          },
+          "actions": [
+            {
+              "type": "change",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "payment_mode": "{{$event.target.value}}",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Select",
+          "props": {
+            "className": "w-48",
+            "value": "{{query.category || ''}}",
+            "options": "{{[{ value: '', label: '$t:custom-sales_stats.filters.category_all' }].concat(((meta && meta.data && meta.data.market_categories) || []))}}"
+          },
+          "actions": [
+            {
+              "type": "change",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "category": "{{$event.target.value}}",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "if": "{{!!(query.type || query.payment_mode || query.category)}}",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "xmark"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.filters.reset_market"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": true,
+                "query": {
+                  "type": "",
+                  "payment_mode": "",
+                  "category": "",
+                  "page": ""
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

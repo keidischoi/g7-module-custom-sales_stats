@@ -1,0 +1,3332 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매 통계 — 이커머스 탭"
+  },
+  "id": "sales_stats_tab_ecommerce",
+  "type": "basic",
+  "name": "Div",
+  "props": {
+    "className": "flex flex-col gap-6"
+  },
+  "children": [
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.sales"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "coins",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.sales) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.orders"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "receipt",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.orders) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.aov"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "scale-balanced",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.aov) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.items"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "boxes-stacked",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.items) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.buyers"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "users",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.buyers) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.first_order_rate"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "user-plus",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.first_order_rate) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.discount"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "tags",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.discount) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.points_used"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "coins",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.points_used) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.shipping"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "truck",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.shipping) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.cancelled_amount"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "rotate-left",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_amount) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.cancelled_orders"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "ban",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancelled_orders) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-4 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-2"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-sm text-gray-500 dark:text-gray-400 truncate"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.cancel_rate"
+                },
+                {
+                  "type": "basic",
+                  "name": "Icon",
+                  "props": {
+                    "name": "percent",
+                    "className": "text-gray-400 dark:text-gray-500"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 text-2xl font-bold text-gray-900 dark:text-white truncate"
+              },
+              "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).formatted || '-'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-2 flex items-center gap-2 flex-wrap text-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change !== undefined}}",
+                  "props": {
+                    "className": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).trend === 'up' ? 'font-semibold text-green-600 dark:text-green-400' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).trend === 'down' ? 'font-semibold text-red-600 dark:text-red-400' : 'font-semibold text-gray-500 dark:text-gray-400')}}"
+                  },
+                  "text": "{{(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change > 0 ? '▲ ' : (((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change < 0 ? '▼ ' : '')) + Math.abs(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change) + '%'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!(((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change !== null && ((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).change !== undefined) && ((meta && meta.data && meta.data.filters) || {}).compare}}",
+                  "props": {
+                    "className": "text-gray-400 dark:text-gray-500"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.no_change"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.kpi.previous"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).previous_formatted}}",
+                  "props": {
+                    "className": "text-gray-600 dark:text-gray-300"
+                  },
+                  "text": "{{((ecoSummary && ecoSummary.data && ecoSummary.data.kpis && ecoSummary.data.kpis.cancel_rate) || {}).previous_formatted}}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eco_trend",
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "min-w-0"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-base font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.trend"
+                },
+                {
+                  "type": "basic",
+                  "name": "P",
+                  "props": {
+                    "className": "text-xs text-gray-500 dark:text-gray-400 mt-1"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.trend_desc"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "composite",
+          "name": "BarChart",
+          "props": {
+            "labels": "{{((ecoSeries && ecoSeries.data) || {}).labels || []}}",
+            "datasets": "{{[{ label: '$t:custom-sales_stats.chart.sales', data: ((ecoSeries && ecoSeries.data) || {}).sales || [], backgroundColor: '#6366F1', borderRadius: 4 }, { label: '$t:custom-sales_stats.chart.orders', data: ((ecoSeries && ecoSeries.data) || {}).orders || [], backgroundColor: '#C7D2FE', borderRadius: 4, yAxisID: 'y1' }]}}",
+            "height": 280,
+            "showLegend": true,
+            "showYGrid": true,
+            "showYAxis": true,
+            "className": "w-full"
+          }
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "grid grid-cols-1 xl:grid-cols-3 gap-6"
+      },
+      "children": [
+        {
+          "id": "eco_products",
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5 xl:col-span-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "H2",
+                      "props": {
+                        "className": "text-base font-semibold text-gray-900 dark:text-white"
+                      },
+                      "text": "$t:custom-sales_stats.ecommerce.products"
+                    }
+                  ]
+                },
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "flex items-center gap-2 flex-wrap"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Button",
+                      "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+                      "props": {
+                        "type": "button",
+                        "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                        "title": "$t:custom-sales_stats.common.csv_hint"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Icon",
+                          "props": {
+                            "name": "download"
+                          }
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Span",
+                          "text": "$t:custom-sales_stats.common.csv"
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": "click",
+                          "handler": "downloadAttachment",
+                          "params": {
+                            "url": "{{'/api/modules/custom-sales_stats/export?scope=ecommerce&dataset=products&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                            "filename": "{{'sales_stats_ecommerce_products_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                          }
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "if": "{{((ecoProducts && ecoProducts.data && ecoProducts.data.rows) || []).length > 0}}",
+                  "props": {
+                    "className": "overflow-x-auto"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Table",
+                      "props": {
+                        "className": "min-w-full text-sm"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Thead",
+                          "props": {
+                            "className": "bg-gray-50 dark:bg-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Tr",
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": ""
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": "$t:custom-sales_stats.col.product"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": "$t:custom-sales_stats.col.quantity"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": "$t:custom-sales_stats.col.orders"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": "$t:custom-sales_stats.col.amount"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Th",
+                                  "props": {
+                                    "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                  },
+                                  "text": "$t:custom-sales_stats.col.share"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Tbody",
+                          "props": {
+                            "className": "divide-y divide-gray-200 dark:divide-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Tr",
+                              "iteration": {
+                                "source": "{{((ecoProducts && ecoProducts.data && ecoProducts.data.rows) || [])}}",
+                                "item_var": "row",
+                                "index_var": "idx"
+                              },
+                              "props": {
+                                "className": "hover:bg-gray-50 dark:hover:bg-gray-700"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Span",
+                                      "props": {
+                                        "className": "inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-200"
+                                      },
+                                      "text": "{{row.rank}}"
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "props": {
+                                        "className": "min-w-0"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Button",
+                                          "props": {
+                                            "type": "button",
+                                            "className": "text-left font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                          },
+                                          "text": "{{row.name}}",
+                                          "actions": [
+                                            {
+                                              "type": "click",
+                                              "handler": "navigate",
+                                              "params": {
+                                                "path": "{{row.admin_url}}",
+                                                "mergeQuery": false,
+                                                "query": {}
+                                              }
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "if": "{{!!row.product_code}}",
+                                          "props": {
+                                            "className": "text-xs text-gray-400 dark:text-gray-500"
+                                          },
+                                          "text": "{{row.product_code}}"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                                  },
+                                  "text": "{{row.quantity}}"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                                  },
+                                  "text": "{{row.orders}}"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                                  },
+                                  "text": "{{row.amount_formatted}}"
+                                },
+                                {
+                                  "type": "basic",
+                                  "name": "Td",
+                                  "props": {
+                                    "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "props": {
+                                        "className": "flex items-center gap-2"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "props": {
+                                            "className": "w-24 h-2 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "basic",
+                                              "name": "Div",
+                                              "props": {
+                                                "className": "h-2 rounded-full",
+                                                "style": {
+                                                  "width": "{{(row.bar || 0) + '%'}}",
+                                                  "backgroundColor": "{{row.color || '#6366F1'}}"
+                                                }
+                                              }
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Span",
+                                          "props": {
+                                            "className": "text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                          },
+                                          "text": "{{(row.share || 0) + '%'}}"
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "composite",
+                  "name": "EmptyState",
+                  "if": "{{((ecoProducts && ecoProducts.data && ecoProducts.data.rows) || []).length === 0}}",
+                  "props": {
+                    "title": "$t:custom-sales_stats.common.empty_title",
+                    "description": "$t:custom-sales_stats.common.empty",
+                    "iconName": "chart-line"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "eco_categories_donut",
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "H2",
+                      "props": {
+                        "className": "text-base font-semibold text-gray-900 dark:text-white"
+                      },
+                      "text": "$t:custom-sales_stats.ecommerce.categories_share"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || []).length > 0}}",
+              "props": {
+                "className": "flex flex-col items-center gap-4"
+              },
+              "children": [
+                {
+                  "type": "composite",
+                  "name": "DonutChart",
+                  "props": {
+                    "data": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || []).map(d => ({ name: d.label || d.name || '-', value: Number(d.value || 0), color: d.color }))}}",
+                    "size": 180,
+                    "cutout": "65%",
+                    "showLegend": false
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "w-full flex flex-col gap-2"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "iteration": {
+                        "source": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || [])}}",
+                        "item_var": "d",
+                        "index_var": "di"
+                      },
+                      "props": {
+                        "className": "flex items-center justify-between gap-2 text-sm"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 min-w-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Div",
+                              "props": {
+                                "className": "w-2 h-2 rounded-full shrink-0",
+                                "style": {
+                                  "backgroundColor": "{{d.color || '#6366F1'}}"
+                                }
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "truncate text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{d.label || d.name || '-'}}"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 shrink-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-xs text-gray-500 dark:text-gray-400"
+                              },
+                              "text": "{{(d.share || 0) + '%'}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-gray-900 dark:text-white tabular-nums"
+                              },
+                              "text": "{{d.amount_formatted || d.value}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-pie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eco_categories",
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "min-w-0"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-base font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.categories"
+                },
+                {
+                  "type": "basic",
+                  "name": "P",
+                  "props": {
+                    "className": "text-xs text-gray-500 dark:text-gray-400 mt-1"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.categories_desc"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center gap-2 flex-wrap"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Button",
+                  "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+                  "props": {
+                    "type": "button",
+                    "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                    "title": "$t:custom-sales_stats.common.csv_hint"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Icon",
+                      "props": {
+                        "name": "download"
+                      }
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Span",
+                      "text": "$t:custom-sales_stats.common.csv"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "click",
+                      "handler": "downloadAttachment",
+                      "params": {
+                        "url": "{{'/api/modules/custom-sales_stats/export?scope=ecommerce&dataset=categories&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                        "filename": "{{'sales_stats_ecommerce_categories_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || []).length > 0}}",
+              "props": {
+                "className": "overflow-x-auto"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Table",
+                  "props": {
+                    "className": "min-w-full text-sm"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Thead",
+                      "props": {
+                        "className": "bg-gray-50 dark:bg-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": ""
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.category"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.quantity"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.orders"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.amount"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.share"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Tbody",
+                      "props": {
+                        "className": "divide-y divide-gray-200 dark:divide-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "iteration": {
+                            "source": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || [])}}",
+                            "item_var": "row",
+                            "index_var": "idx"
+                          },
+                          "props": {
+                            "className": "hover:bg-gray-50 dark:hover:bg-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Span",
+                                  "props": {
+                                    "className": "inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-200"
+                                  },
+                                  "text": "{{row.rank}}"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{row.name}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.quantity}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.orders}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.amount_formatted}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Div",
+                                  "props": {
+                                    "className": "flex items-center gap-2"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "props": {
+                                        "className": "w-24 h-2 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "props": {
+                                            "className": "h-2 rounded-full",
+                                            "style": {
+                                              "width": "{{(row.bar || 0) + '%'}}",
+                                              "backgroundColor": "{{row.color || '#6366F1'}}"
+                                            }
+                                          }
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "basic",
+                                      "name": "Span",
+                                      "props": {
+                                        "className": "text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                                      },
+                                      "text": "{{(row.share || 0) + '%'}}"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoCategories && ecoCategories.data && ecoCategories.data.rows) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-line"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eco_buyers",
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "min-w-0"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-base font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.buyers"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center gap-2 flex-wrap"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Button",
+                  "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+                  "props": {
+                    "type": "button",
+                    "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                    "title": "$t:custom-sales_stats.common.csv_hint"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Icon",
+                      "props": {
+                        "name": "download"
+                      }
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Span",
+                      "text": "$t:custom-sales_stats.common.csv"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "click",
+                      "handler": "downloadAttachment",
+                      "params": {
+                        "url": "{{'/api/modules/custom-sales_stats/export?scope=ecommerce&dataset=buyers&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                        "filename": "{{'sales_stats_ecommerce_buyers_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoBuyers && ecoBuyers.data && ecoBuyers.data.rows) || []).length > 0}}",
+              "props": {
+                "className": "overflow-x-auto"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Table",
+                  "props": {
+                    "className": "min-w-full text-sm"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Thead",
+                      "props": {
+                        "className": "bg-gray-50 dark:bg-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": ""
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.member"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.orders"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.amount"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.aov"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.last_at"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Tbody",
+                      "props": {
+                        "className": "divide-y divide-gray-200 dark:divide-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "iteration": {
+                            "source": "{{((ecoBuyers && ecoBuyers.data && ecoBuyers.data.rows) || [])}}",
+                            "item_var": "row",
+                            "index_var": "idx"
+                          },
+                          "props": {
+                            "className": "hover:bg-gray-50 dark:hover:bg-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Span",
+                                  "props": {
+                                    "className": "inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-700 text-xs font-semibold text-gray-700 dark:text-gray-200"
+                                  },
+                                  "text": "{{row.rank}}"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Div",
+                                  "props": {
+                                    "className": "flex items-center justify-between gap-2 min-w-0"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "props": {
+                                        "className": "min-w-0"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Span",
+                                          "props": {
+                                            "className": "font-medium text-gray-900 dark:text-white truncate",
+                                            "data-g7-user": "{{(row.member || {}).uuid || ''}}",
+                                            "data-g7-user-name": "{{(row.member || {}).nickname || ''}}",
+                                            "data-g7-user-click": "1"
+                                          },
+                                          "text": "{{(row.member || {}).nickname || '-'}}"
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "if": "{{!!(row.member || {}).email}}",
+                                          "props": {
+                                            "className": "text-xs text-gray-400 dark:text-gray-500 truncate"
+                                          },
+                                          "text": "{{(row.member || {}).email}}"
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "if": "{{!!row.member && !(row.member || {}).uuid}}",
+                                          "props": {
+                                            "className": "text-xs text-gray-400 dark:text-gray-500"
+                                          },
+                                          "text": "$t:custom-sales_stats.member.withdrawn"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "if": "{{!!(row.member || {}).uuid}}",
+                                      "props": {
+                                        "className": "flex items-center gap-1 shrink-0"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Button",
+                                          "props": {
+                                            "type": "button",
+                                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                                            "title": "$t:custom-sales_stats.member.open"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "basic",
+                                              "name": "Icon",
+                                              "props": {
+                                                "name": "user"
+                                              }
+                                            },
+                                            {
+                                              "type": "basic",
+                                              "name": "Span",
+                                              "text": "$t:custom-sales_stats.member.info"
+                                            }
+                                          ],
+                                          "actions": [
+                                            {
+                                              "type": "click",
+                                              "handler": "custom-sales_stats.openMember",
+                                              "params": {
+                                                "uuid": "{{(row.member || {}).uuid}}"
+                                              }
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Button",
+                                          "props": {
+                                            "type": "button",
+                                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                                            "title": "$t:custom-sales_stats.member.note_hint"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "basic",
+                                              "name": "Icon",
+                                              "props": {
+                                                "name": "envelope"
+                                              }
+                                            },
+                                            {
+                                              "type": "basic",
+                                              "name": "Span",
+                                              "text": "$t:custom-sales_stats.member.note"
+                                            }
+                                          ],
+                                          "actions": [
+                                            {
+                                              "type": "click",
+                                              "handler": "custom-sales_stats.composeNote",
+                                              "params": {
+                                                "uuid": "{{(row.member || {}).uuid}}",
+                                                "name": "{{(row.member || {}).nickname || ''}}"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.orders}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.amount_formatted}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.aov_formatted}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.last_at || '-'}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoBuyers && ecoBuyers.data && ecoBuyers.data.rows) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-line"
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "mt-3 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.ecommerce.guest_orders"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "font-medium"
+              },
+              "text": "{{((ecoBuyers && ecoBuyers.data && ecoBuyers.data.guest) || {}).orders || 0}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "font-medium"
+              },
+              "text": "{{((ecoBuyers && ecoBuyers.data && ecoBuyers.data.guest) || {}).amount_formatted || '-'}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "grid grid-cols-1 lg:grid-cols-3 gap-6"
+      },
+      "children": [
+        {
+          "id": "eco_statuses",
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "H2",
+                      "props": {
+                        "className": "text-base font-semibold text-gray-900 dark:text-white"
+                      },
+                      "text": "$t:custom-sales_stats.ecommerce.statuses"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.statuses) || []).length > 0}}",
+              "props": {
+                "className": "flex flex-col items-center gap-4"
+              },
+              "children": [
+                {
+                  "type": "composite",
+                  "name": "DonutChart",
+                  "props": {
+                    "data": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.statuses) || []).map(d => ({ name: d.label || d.name || '-', value: Number(d.value || 0), color: d.color }))}}",
+                    "size": 180,
+                    "cutout": "65%",
+                    "showLegend": false
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "w-full flex flex-col gap-2"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "iteration": {
+                        "source": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.statuses) || [])}}",
+                        "item_var": "d",
+                        "index_var": "di"
+                      },
+                      "props": {
+                        "className": "flex items-center justify-between gap-2 text-sm"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 min-w-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Div",
+                              "props": {
+                                "className": "w-2 h-2 rounded-full shrink-0",
+                                "style": {
+                                  "backgroundColor": "{{d.color || '#6366F1'}}"
+                                }
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "truncate text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{d.label || d.name || '-'}}"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 shrink-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-xs text-gray-500 dark:text-gray-400"
+                              },
+                              "text": "{{(d.share || 0) + '%'}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-gray-900 dark:text-white tabular-nums"
+                              },
+                              "text": "{{d.value || d.value}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.statuses) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-pie"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eco_payments",
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "H2",
+                      "props": {
+                        "className": "text-base font-semibold text-gray-900 dark:text-white"
+                      },
+                      "text": "$t:custom-sales_stats.ecommerce.payment_methods"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.payment_methods) || []).length > 0}}",
+              "props": {
+                "className": "flex flex-col items-center gap-4"
+              },
+              "children": [
+                {
+                  "type": "composite",
+                  "name": "DonutChart",
+                  "props": {
+                    "data": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.payment_methods) || []).map(d => ({ name: d.label || d.name || '-', value: Number(d.value || 0), color: d.color }))}}",
+                    "size": 180,
+                    "cutout": "65%",
+                    "showLegend": false
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "w-full flex flex-col gap-2"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "iteration": {
+                        "source": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.payment_methods) || [])}}",
+                        "item_var": "d",
+                        "index_var": "di"
+                      },
+                      "props": {
+                        "className": "flex items-center justify-between gap-2 text-sm"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 min-w-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Div",
+                              "props": {
+                                "className": "w-2 h-2 rounded-full shrink-0",
+                                "style": {
+                                  "backgroundColor": "{{d.color || '#6366F1'}}"
+                                }
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "truncate text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{d.label || d.name || '-'}}"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 shrink-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-xs text-gray-500 dark:text-gray-400"
+                              },
+                              "text": "{{(d.share || 0) + '%'}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-gray-900 dark:text-white tabular-nums"
+                              },
+                              "text": "{{d.amount_formatted || d.value}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.payment_methods) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-pie"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eco_devices",
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "H2",
+                      "props": {
+                        "className": "text-base font-semibold text-gray-900 dark:text-white"
+                      },
+                      "text": "$t:custom-sales_stats.ecommerce.devices"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.devices) || []).length > 0}}",
+              "props": {
+                "className": "flex flex-col items-center gap-4"
+              },
+              "children": [
+                {
+                  "type": "composite",
+                  "name": "DonutChart",
+                  "props": {
+                    "data": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.devices) || []).map(d => ({ name: d.label || d.name || '-', value: Number(d.value || 0), color: d.color }))}}",
+                    "size": 180,
+                    "cutout": "65%",
+                    "showLegend": false
+                  }
+                },
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "w-full flex flex-col gap-2"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "iteration": {
+                        "source": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.devices) || [])}}",
+                        "item_var": "d",
+                        "index_var": "di"
+                      },
+                      "props": {
+                        "className": "flex items-center justify-between gap-2 text-sm"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 min-w-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Div",
+                              "props": {
+                                "className": "w-2 h-2 rounded-full shrink-0",
+                                "style": {
+                                  "backgroundColor": "{{d.color || '#6366F1'}}"
+                                }
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "truncate text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{d.label || d.name || '-'}}"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "props": {
+                            "className": "flex items-center gap-2 shrink-0"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-xs text-gray-500 dark:text-gray-400"
+                              },
+                              "text": "{{(d.share || 0) + '%'}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "props": {
+                                "className": "text-gray-900 dark:text-white tabular-nums"
+                              },
+                              "text": "{{d.value || d.value}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.devices) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-pie"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eco_top_orders",
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "min-w-0"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-base font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.top_orders"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.top_orders) || []).length > 0}}",
+              "props": {
+                "className": "overflow-x-auto"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Table",
+                  "props": {
+                    "className": "min-w-full text-sm"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Thead",
+                      "props": {
+                        "className": "bg-gray-50 dark:bg-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.order_no"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.member"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.status"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.amount"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.at"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Tbody",
+                      "props": {
+                        "className": "divide-y divide-gray-200 dark:divide-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "iteration": {
+                            "source": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.top_orders) || [])}}",
+                            "item_var": "row",
+                            "index_var": "idx"
+                          },
+                          "props": {
+                            "className": "hover:bg-gray-50 dark:hover:bg-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Button",
+                                  "props": {
+                                    "type": "button",
+                                    "className": "text-left font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                  },
+                                  "text": "{{row.order_number}}",
+                                  "actions": [
+                                    {
+                                      "type": "click",
+                                      "handler": "navigate",
+                                      "params": {
+                                        "path": "{{row.admin_url}}",
+                                        "mergeQuery": false,
+                                        "query": {}
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Div",
+                                  "props": {
+                                    "className": "flex items-center justify-between gap-2 min-w-0"
+                                  },
+                                  "children": [
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "props": {
+                                        "className": "min-w-0"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Span",
+                                          "props": {
+                                            "className": "font-medium text-gray-900 dark:text-white truncate",
+                                            "data-g7-user": "{{(row.member || {}).uuid || ''}}",
+                                            "data-g7-user-name": "{{(row.member || {}).nickname || ''}}",
+                                            "data-g7-user-click": "1"
+                                          },
+                                          "text": "{{(row.member || {}).nickname || '-'}}"
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "if": "{{!!(row.member || {}).email}}",
+                                          "props": {
+                                            "className": "text-xs text-gray-400 dark:text-gray-500 truncate"
+                                          },
+                                          "text": "{{(row.member || {}).email}}"
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Div",
+                                          "if": "{{!!row.member && !(row.member || {}).uuid}}",
+                                          "props": {
+                                            "className": "text-xs text-gray-400 dark:text-gray-500"
+                                          },
+                                          "text": "$t:custom-sales_stats.member.withdrawn"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "basic",
+                                      "name": "Div",
+                                      "if": "{{!!(row.member || {}).uuid}}",
+                                      "props": {
+                                        "className": "flex items-center gap-1 shrink-0"
+                                      },
+                                      "children": [
+                                        {
+                                          "type": "basic",
+                                          "name": "Button",
+                                          "props": {
+                                            "type": "button",
+                                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                                            "title": "$t:custom-sales_stats.member.open"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "basic",
+                                              "name": "Icon",
+                                              "props": {
+                                                "name": "user"
+                                              }
+                                            },
+                                            {
+                                              "type": "basic",
+                                              "name": "Span",
+                                              "text": "$t:custom-sales_stats.member.info"
+                                            }
+                                          ],
+                                          "actions": [
+                                            {
+                                              "type": "click",
+                                              "handler": "custom-sales_stats.openMember",
+                                              "params": {
+                                                "uuid": "{{(row.member || {}).uuid}}"
+                                              }
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "type": "basic",
+                                          "name": "Button",
+                                          "props": {
+                                            "type": "button",
+                                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                                            "title": "$t:custom-sales_stats.member.note_hint"
+                                          },
+                                          "children": [
+                                            {
+                                              "type": "basic",
+                                              "name": "Icon",
+                                              "props": {
+                                                "name": "envelope"
+                                              }
+                                            },
+                                            {
+                                              "type": "basic",
+                                              "name": "Span",
+                                              "text": "$t:custom-sales_stats.member.note"
+                                            }
+                                          ],
+                                          "actions": [
+                                            {
+                                              "type": "click",
+                                              "handler": "custom-sales_stats.composeNote",
+                                              "params": {
+                                                "uuid": "{{(row.member || {}).uuid}}",
+                                                "name": "{{(row.member || {}).nickname || ''}}"
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "children": [
+                                {
+                                  "type": "basic",
+                                  "name": "Span",
+                                  "props": {
+                                    "className": "inline-flex px-2 py-1 rounded-md text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                                  },
+                                  "text": "{{row.status_label}}"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.amount_formatted}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.at || '-'}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoBreakdowns && ecoBreakdowns.data && ecoBreakdowns.data.top_orders) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-line"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eco_period",
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-start justify-between gap-3 flex-wrap mb-4"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "min-w-0"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-base font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "$t:custom-sales_stats.ecommerce.period_table"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center gap-2 flex-wrap"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Button",
+                  "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+                  "props": {
+                    "type": "button",
+                    "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                    "title": "$t:custom-sales_stats.common.csv_hint"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Icon",
+                      "props": {
+                        "name": "download"
+                      }
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Span",
+                      "text": "$t:custom-sales_stats.common.csv"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "click",
+                      "handler": "downloadAttachment",
+                      "params": {
+                        "url": "{{'/api/modules/custom-sales_stats/export?scope=ecommerce&dataset=period&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + ''}}",
+                        "filename": "{{'sales_stats_ecommerce_period_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "if": "{{((ecoSeries && ecoSeries.data && ecoSeries.data.rows) || []).length > 0}}",
+              "props": {
+                "className": "overflow-x-auto"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Table",
+                  "props": {
+                    "className": "min-w-full text-sm"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Thead",
+                      "props": {
+                        "className": "bg-gray-50 dark:bg-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.period"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.orders"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.quantity"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.amount"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Th",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-xs font-medium text-gray-500 dark:text-gray-400 whitespace-nowrap"
+                              },
+                              "text": "$t:custom-sales_stats.col.aov"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Tbody",
+                      "props": {
+                        "className": "divide-y divide-gray-200 dark:divide-gray-700"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Tr",
+                          "iteration": {
+                            "source": "{{((ecoSeries && ecoSeries.data && ecoSeries.data.rows) || [])}}",
+                            "item_var": "row",
+                            "index_var": "idx"
+                          },
+                          "props": {
+                            "className": "hover:bg-gray-50 dark:hover:bg-gray-700"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-gray-700 dark:text-gray-200"
+                              },
+                              "text": "{{row.period}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.orders}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.items}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.sales_formatted}}"
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Td",
+                              "props": {
+                                "className": "px-3 py-2 text-right text-gray-700 dark:text-gray-200 whitespace-nowrap"
+                              },
+                              "text": "{{row.aov_formatted}}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "composite",
+              "name": "EmptyState",
+              "if": "{{((ecoSeries && ecoSeries.data && ecoSeries.data.rows) || []).length === 0}}",
+              "props": {
+                "title": "$t:custom-sales_stats.common.empty_title",
+                "description": "$t:custom-sales_stats.common.empty",
+                "iconName": "chart-line"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,249 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매자 상세 — 제목 · 뒤로 · 새로고침"
+  },
+  "id": "seller_header",
+  "type": "basic",
+  "name": "Div",
+  "props": {
+    "className": "flex items-start justify-between gap-4 flex-wrap"
+  },
+  "children": [
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "min-w-0"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Button",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:underline mb-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "arrow-left"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.seller.back"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "navigate",
+              "params": {
+                "path": "/admin/sales-stats",
+                "mergeQuery": false,
+                "query": {
+                  "tab": "market",
+                  "from": "{{query.from || ''}}",
+                  "to": "{{query.to || ''}}",
+                  "granularity": "{{query.granularity || ''}}",
+                  "basis": "{{query.basis || ''}}",
+                  "compare": "{{query.compare || ''}}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-2"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "store",
+                "className": "text-blue-600 dark:text-blue-400"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "H1",
+              "props": {
+                "className": "text-2xl font-bold text-gray-900 dark:text-white"
+              },
+              "text": "{{((seller && seller.data && seller.data.profile) || {}).shop_name || '$t:custom-sales_stats.seller.title'}}"
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex items-center gap-2 flex-wrap mt-1 text-sm text-gray-500 dark:text-gray-400"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "calendar"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{(((meta && meta.data && meta.data.filters) || {}).from || '') + ' ~ ' + (((meta && meta.data && meta.data.filters) || {}).to || '')}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{((meta && meta.data && meta.data.filters) || {}).granularity === 'week' ? '$t:custom-sales_stats.granularity.week' : (((meta && meta.data && meta.data.filters) || {}).granularity === 'month' ? '$t:custom-sales_stats.granularity.month' : (((meta && meta.data && meta.data.filters) || {}).granularity === 'year' ? '$t:custom-sales_stats.granularity.year' : '$t:custom-sales_stats.granularity.day'))}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "{{((meta && meta.data && meta.data.filters) || {}).timezone || 'Asia/Seoul'}}"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "props": {
+                "className": "text-gray-300 dark:text-gray-600"
+              },
+              "text": "·"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "text": "$t:custom-sales_stats.filters.compare_with"
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "if": "{{!!((meta && meta.data && meta.data.filters) || {}).previous}}",
+              "text": "{{(((meta && meta.data && meta.data.filters) || {}).previous && ((meta && meta.data && meta.data.filters) || {}).previous.from) + ' ~ ' + (((meta && meta.data && meta.data.filters) || {}).previous && ((meta && meta.data && meta.data.filters) || {}).previous.to)}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "basic",
+      "name": "Div",
+      "if": "{{!!(seller && seller.data && seller.data.profile)}}",
+      "props": {
+        "className": "flex items-center gap-2 flex-wrap"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Button",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700",
+            "title": "$t:custom-sales_stats.common.refresh"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "rotate"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.common.refresh"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "sequence",
+              "actions": [
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "meta"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "seller"
+                  }
+                },
+                {
+                  "handler": "refetchDataSource",
+                  "params": {
+                    "dataSourceId": "sellerOrders"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Button",
+          "if": "{{!!(meta && meta.data && meta.data.can && meta.data.can.export)}}",
+          "props": {
+            "type": "button",
+            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+            "title": "$t:custom-sales_stats.common.csv_hint"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "download"
+              }
+            },
+            {
+              "type": "basic",
+              "name": "Span",
+              "text": "$t:custom-sales_stats.seller.csv_orders"
+            }
+          ],
+          "actions": [
+            {
+              "type": "click",
+              "handler": "downloadAttachment",
+              "params": {
+                "url": "{{'/api/modules/custom-sales_stats/export?scope=market&dataset=seller_orders&' + 'from=' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '&to=' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '&granularity=' + (((meta && meta.data && meta.data.filters) || {}).granularity || '') + '&basis=' + (((meta && meta.data && meta.data.filters) || {}).basis || 'paid') + '&compare=' + (((meta && meta.data && meta.data.filters) || {}).compare ? '1' : '0') + '&type=' + (query.type || '') + '&payment_mode=' + (query.payment_mode || '') + '&category=' + (query.category || '') + '&q=' + (query.q || '') + '&seller=' + route.userId}}",
+                "filename": "{{'sales_stats_market_seller_orders_' + (((meta && meta.data && meta.data.filters) || {}).from || '') + '_' + (((meta && meta.data && meta.data.filters) || {}).to || '') + '.csv'}}"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

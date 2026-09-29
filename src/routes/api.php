@@ -1,66 +1,50 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
-
-$base = dirname(__DIR__);
-
-foreach ([
-    $base.'/Services/SalesStatsService.php',
-    $base.'/Http/Controllers/Admin/SalesStatsController.php',
-] as $f) {
-    if (is_file($f)) {
-        require_once $f;
-    }
-}
+use Modules\Custom\SalesStats\Http\Controllers\Admin\ExportController;
+use Modules\Custom\SalesStats\Http\Controllers\Admin\StatsController;
 
 /*
-| prefix: api/modules/sirsoft-sales_stats  (ModuleRouteServiceProvider)
+|--------------------------------------------------------------------------
+| 판매 통계 API (관리자 전용 · 읽기 전용)
+|--------------------------------------------------------------------------
+|
+| ModuleRouteServiceProvider 가 prefix 를 자동 적용합니다.
+| - URL prefix: 'api/modules/custom-sales_stats'
+| - Name prefix: 'api.modules.custom-sales_stats.'
+|
+| 모든 라우트: auth:sanctum + admin + permission:admin,custom-sales_stats.stats.view
+| 내보내기는 추가로 custom-sales_stats.stats.export 권한이 필요합니다.
+|
 */
 
-// 진단용 (로그인만 필요) — 문제 파악용
-Route::middleware(['auth:sanctum'])->get('/ping', function () {
-    $info = [
-        'ok' => true,
-        'php' => PHP_VERSION,
-        'user' => auth()->id(),
-        'tables' => [
-            'ecommerce_orders' => Schema::hasTable('ecommerce_orders'),
-            'ecommerce_order_options' => Schema::hasTable('ecommerce_order_options'),
-            'ecommerce_products' => Schema::hasTable('ecommerce_products'),
-            'ecommerce_categories' => Schema::hasTable('ecommerce_categories'),
-            'ecommerce_product_categories' => Schema::hasTable('ecommerce_product_categories'),
-        ],
-    ];
+$view = 'permission:admin,custom-sales_stats.stats.view';
+$export = 'permission:admin,custom-sales_stats.stats.export';
 
-    try {
-        if ($info['tables']['ecommerce_orders']) {
-            $info['orders_count'] = DB::table('ecommerce_orders')->count();
-            $info['order_statuses'] = DB::table('ecommerce_orders')
-                ->select('order_status', DB::raw('count(*) as c'))
-                ->groupBy('order_status')
-                ->pluck('c', 'order_status');
-        }
-        if ($info['tables']['ecommerce_order_options']) {
-            $info['options_count'] = DB::table('ecommerce_order_options')->count();
-            $cols = ['id', 'order_id', 'product_id', 'quantity', 'subtotal_price', 'subtotal_paid_amount', 'option_status', 'product_name'];
-            $info['option_columns'] = [];
-            foreach ($cols as $c) {
-                $info['option_columns'][$c] = Schema::hasColumn('ecommerce_order_options', $c);
-            }
-        }
-    } catch (\Throwable $e) {
-        $info['db_error'] = $e->getMessage();
-    }
+Route::middleware(['auth:sanctum', 'admin', 'throttle:120,1', $view])->group(function () use ($export) {
+    Route::get('meta', [StatsController::class, 'meta'])->name('meta');
+    Route::get('overview', [StatsController::class, 'overview'])->name('overview');
 
-    return response()->json(['success' => true, 'data' => $info], 200, [], JSON_UNESCAPED_UNICODE);
-})->name('ping');
+    Route::prefix('ecommerce')->name('ecommerce.')->group(function () {
+        Route::get('summary', [StatsController::class, 'ecommerceSummary'])->name('summary');
+        Route::get('timeseries', [StatsController::class, 'ecommerceTimeseries'])->name('timeseries');
+        Route::get('products', [StatsController::class, 'ecommerceProducts'])->name('products');
+        Route::get('categories', [StatsController::class, 'ecommerceCategories'])->name('categories');
+        Route::get('buyers', [StatsController::class, 'ecommerceBuyers'])->name('buyers');
+        Route::get('breakdowns', [StatsController::class, 'ecommerceBreakdowns'])->name('breakdowns');
+    });
 
-// 메인 통계 — sanctum만 (admin 미들웨어는 환경에 따라 403)
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/', [\Modules\Sirsoft\SalesStats\Http\Controllers\Admin\SalesStatsController::class, 'index'])
-        ->name('index');
-    Route::get('/export', [\Modules\Sirsoft\SalesStats\Http\Controllers\Admin\SalesStatsController::class, 'export'])
-        ->name('export');
+    Route::prefix('market')->name('market.')->group(function () {
+        Route::get('summary', [StatsController::class, 'marketSummary'])->name('summary');
+        Route::get('timeseries', [StatsController::class, 'marketTimeseries'])->name('timeseries');
+        Route::get('sellers', [StatsController::class, 'marketSellers'])->name('sellers');
+        Route::get('sellers/{userId}', [StatsController::class, 'seller'])->whereNumber('userId')->name('sellers.show');
+        Route::get('sellers/{userId}/orders', [StatsController::class, 'sellerOrders'])->whereNumber('userId')->name('sellers.orders');
+        Route::get('listings', [StatsController::class, 'marketListings'])->name('listings');
+        Route::get('buyers', [StatsController::class, 'marketBuyers'])->name('buyers');
+        Route::get('breakdowns', [StatsController::class, 'marketBreakdowns'])->name('breakdowns');
+        Route::get('settlements', [StatsController::class, 'marketSettlements'])->name('settlements');
+    });
+
+    Route::get('export', [ExportController::class, 'export'])->middleware([$export, 'throttle:20,1'])->name('export');
 });

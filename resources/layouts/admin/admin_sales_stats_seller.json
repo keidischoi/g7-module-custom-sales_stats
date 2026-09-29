@@ -1,0 +1,264 @@
+{
+  "version": "2.0.0",
+  "layout_name": "admin_sales_stats_seller",
+  "extends": "_admin_base",
+  "permissions": [
+    "custom-sales_stats.stats.view"
+  ],
+  "meta": {
+    "title": "$t:custom-sales_stats.seller.title",
+    "description": "$t:custom-sales_stats.seller.description"
+  },
+  "data_sources": [
+    {
+      "id": "meta",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/meta",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
+      },
+      "fallback": {
+        "data": {
+          "tabs": [
+            {
+              "id": "overview",
+              "label": "$t:custom-sales_stats.tabs.overview"
+            }
+          ],
+          "presets": [],
+          "filters": {},
+          "can": {},
+          "available": {},
+          "market_categories": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "seller",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/sellers/{{route.userId}}",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "loading_strategy": "blocking",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}"
+      },
+      "fallback": {
+        "data": {
+          "missing": true
+        }
+      },
+      "errorHandling": {
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.seller.not_found"
+          }
+        },
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "sellerOrders",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/sellers/{{route.userId}}/orders",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}",
+        "page": "{{query.page || ''}}",
+        "per_page": "20"
+      },
+      "fallback": {
+        "data": {
+          "rows": [],
+          "meta": {
+            "last_page": 1
+          }
+        }
+      },
+      "errorHandling": {
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    }
+  ],
+  "slots": {
+    "content": [
+      {
+        "id": "seller_page",
+        "type": "basic",
+        "name": "Div",
+        "props": {
+          "className": "admin-page-content-responsive"
+        },
+        "children": [
+          {
+            "type": "basic",
+            "name": "Div",
+            "props": {
+              "className": "flex flex-col gap-6"
+            },
+            "children": [
+              {
+                "partial": "partials/admin_sales_stats_seller/_header.json"
+              },
+              {
+                "id": "seller_not_found",
+                "type": "basic",
+                "name": "Div",
+                "if": "{{!!!(seller && seller.data && seller.data.profile)}}",
+                "props": {
+                  "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 flex flex-col items-center gap-4"
+                },
+                "children": [
+                  {
+                    "type": "composite",
+                    "name": "EmptyState",
+                    "props": {
+                      "title": "$t:custom-sales_stats.seller.not_found_title",
+                      "description": "$t:custom-sales_stats.seller.not_found",
+                      "iconName": "store"
+                    }
+                  },
+                  {
+                    "type": "basic",
+                    "name": "Button",
+                    "props": {
+                      "type": "button",
+                      "className": "inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    },
+                    "children": [
+                      {
+                        "type": "basic",
+                        "name": "Icon",
+                        "props": {
+                          "name": "arrow-left"
+                        }
+                      },
+                      {
+                        "type": "basic",
+                        "name": "Span",
+                        "text": "$t:custom-sales_stats.seller.back"
+                      }
+                    ],
+                    "actions": [
+                      {
+                        "type": "click",
+                        "handler": "navigate",
+                        "params": {
+                          "path": "/admin/sales-stats",
+                          "mergeQuery": false,
+                          "query": {
+                            "tab": "market",
+                            "from": "{{query.from || ''}}",
+                            "to": "{{query.to || ''}}",
+                            "granularity": "{{query.granularity || ''}}",
+                            "basis": "{{query.basis || ''}}",
+                            "compare": "{{query.compare || ''}}"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "seller_found",
+                "type": "basic",
+                "name": "Div",
+                "if": "{{!!(seller && seller.data && seller.data.profile)}}",
+                "props": {
+                  "className": "flex flex-col gap-6"
+                },
+                "children": [
+                  {
+                    "partial": "partials/admin_sales_stats_seller/_filters.json"
+                  },
+                  {
+                    "partial": "partials/admin_sales_stats_seller/_profile.json"
+                  },
+                  {
+                    "partial": "partials/admin_sales_stats_seller/_body.json"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
