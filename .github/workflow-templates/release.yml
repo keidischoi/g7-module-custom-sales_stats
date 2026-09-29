@@ -39,6 +39,8 @@ jobs:
         run: |
           zip="$ID-$VER.zip"
           git archive --format=zip --prefix="$ID/" -o "$zip" HEAD
+          # 최상위 폴더가 식별자(custom-sales_stats/)인지 확인 — G7 은 폴더명을 식별자로 씁니다
+          if unzip -Z1 "$zip" | grep -v "^$ID/" >/dev/null; then echo "zip 최상위 폴더 오류" >&2; exit 1; fi
           notes=""
           if [ -f CHANGELOG.md ]; then
             notes=$(awk -v v="$VER" '

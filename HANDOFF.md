@@ -1,6 +1,7 @@
 # HANDOFF — custom-sales_stats v2 재구축 (작업 재개용)
 
-> 작성: 2026-09-29 23:41 KST · 브랜치 `feat/v2-redesign` (main c4a12ac 기준) · 상태: **WIP (PR 미생성)**
+> 작성: 2026-09-29 23:41 KST · 브랜치 `feat/v2-redesign` (main c4a12ac 기준)
+> **갱신: 2026-09-30 KST · 상태: 구현 완료, PR #1 열림(머지 안 함).** 3장의 남은 작업은 커밋 c4130d3에서 모두 끝났고, 이후 설치 폴더명(`modules/custom-sales_stats`)·패키징 작업을 추가했습니다(아래 7장).
 > 이 문서만으로 다른 계정의 새 에이전트가 이어서 작업할 수 있도록 작성했습니다.
 
 ---
@@ -236,3 +237,13 @@ find . -name '*.json' -not -path './.git/*' -exec python3 -m json.tool {} \; >/d
 node --check dist/js/module.iife.js
 php artisan test modules/custom-sales_stats/tests   # 하네스 구성 후
 ```
+
+
+## 7. 추가 작업 (2026-09-30 KST)
+
+- **설치 폴더명 = `custom-sales_stats`**: G7은 폴더명을 식별자로 씁니다(`AbstractModule::getIdentifier()` = `basename(modulePath)`). `module.json` identifier도 `custom-sales_stats`입니다.
+- `scripts/package.sh`: `build/custom-sales_stats-<버전>.zip`을 만들고, 모든 항목이 `custom-sales_stats/` 아래에 있는지 검사합니다. NAS에서는 `PHP=php82 bash scripts/package.sh`.
+- `.gitattributes`: `tests/`, `.github/`, `HANDOFF.md`를 설치 ZIP에서 제외합니다(`export-ignore`).
+- 릴리스 워크플로 템플릿: zip 최상위 폴더 검사를 추가했습니다(여전히 `.github/workflow-templates/`).
+- README: NAS 경로(`/volume1/web/3ds`) 기준 설치/업데이트/재설치 명령, 폴더명 경고, GitHub "Download ZIP" 폴더명 변경 안내.
+- `tests/Unit/PackagingTest.php`: 식별자, 워크플로 prefix, README 설치 경로, 패키지 zip 최상위 폴더 검증.

@@ -40,28 +40,91 @@
 
 ## 설치
 
+> ⚠️ **설치 폴더명은 반드시 `custom-sales_stats`** 입니다 → `modules/custom-sales_stats`
+> G7은 모듈 폴더명을 식별자로 사용합니다. 저장소 이름(`g7-module-custom-sales_stats`)이나 GitHub "Download ZIP"의 폴더명(`g7-module-custom-sales_stats-main`)을 그대로 두면 모듈이 인식되지 않습니다.
+
+아래 예시는 Synology NAS 사이트 루트 `/volume1/web/3ds`, PHP 8.2 바이너리 `php82` 기준입니다.
+
+### 방법 1. git clone (권장)
+
 ```bash
-cd /path/to/g7/modules
+cd /volume1/web/3ds/modules
 git clone https://github.com/keidischoi/g7-module-custom-sales_stats.git custom-sales_stats
-cd /path/to/g7
+cd /volume1/web/3ds
 php82 artisan extension:update-autoload
 php82 artisan module:install custom-sales_stats
 php82 artisan module:activate custom-sales_stats
 php82 artisan optimize:clear
 ```
 
-> 서버에서 PHP 8.2 바이너리가 `php82`인 환경 기준입니다. 기본 `php`가 8.2 이상이면 `php artisan ...`으로 바꿔 쓰세요.
-> 관리자 화면의 모듈 관리에서 ZIP으로 설치해도 됩니다.
+`git clone` 끝의 `custom-sales_stats`가 폴더명입니다. 빠뜨리면 `g7-module-custom-sales_stats` 폴더가 생기므로 꼭 붙이세요.
+
+### 방법 2. 릴리스 ZIP
+
+GitHub Releases의 **`custom-sales_stats-2.0.0.zip`** 은 최상위 폴더가 `custom-sales_stats/` 입니다.
+
+- 관리자 > 모듈 관리 > ZIP 업로드로 설치하거나,
+- 서버에서 직접 풀어 `modules/custom-sales_stats`가 되게 합니다.
+
+```bash
+cd /volume1/web/3ds/modules
+unzip /path/to/custom-sales_stats-2.0.0.zip      # → modules/custom-sales_stats/
+cd /volume1/web/3ds
+php82 artisan extension:update-autoload
+php82 artisan module:install custom-sales_stats
+php82 artisan module:activate custom-sales_stats
+php82 artisan optimize:clear
+```
+
+GitHub의 "Code > Download ZIP"을 쓴 경우에는 풀린 `g7-module-custom-sales_stats-main` 폴더 이름을 `custom-sales_stats`로 바꾼 뒤 `modules/` 아래에 두세요.
+
+설치용 ZIP을 직접 만들려면(커밋된 내용 기준, `build/custom-sales_stats-<버전>.zip`):
+
+```bash
+PHP=php82 bash scripts/package.sh
+```
+
+### 업데이트 (같은 식별자 `custom-sales_stats` 사이)
+
+**git으로 설치한 경우** (자체 테이블·마이그레이션이 없으므로 코드와 레이아웃만 갱신):
+
+```bash
+cd /volume1/web/3ds/modules/custom-sales_stats
+git pull
+cd /volume1/web/3ds
+php82 artisan extension:update-autoload
+php82 artisan module:refresh-layout custom-sales_stats
+php82 artisan optimize:clear
+```
+
+**릴리스 ZIP으로 업데이트하는 경우:**
+
+```bash
+cd /volume1/web/3ds
+php82 artisan module:update custom-sales_stats --zip=/path/to/custom-sales_stats-2.0.0.zip
+php82 artisan optimize:clear
+```
+
+업데이트 후 브라우저에서 강력 새로고침(Ctrl+Shift+R)을 하세요.
 
 ## 기존 `sirsoft-sales_stats`(v1.x)에서 재설치
 
 식별자가 `sirsoft-sales_stats` → **`custom-sales_stats`** 로 바뀌었으므로 업데이트가 아니라 **재설치**가 필요합니다.
 
-1. 관리자 > 모듈 관리에서 기존 `sirsoft-sales_stats`를 **제거(uninstall)** 합니다. (또는 `php82 artisan module:uninstall sirsoft-sales_stats`)
-2. `modules/sirsoft-sales_stats` 폴더를 **삭제**합니다.
-3. 위 "설치" 절차대로 `custom-sales_stats`를 설치하고 활성화합니다.
-4. `php82 artisan optimize:clear`를 실행합니다.
-5. 필요한 관리자/역할에 `custom-sales_stats.viewer` 역할 또는 `custom-sales_stats.stats.view` / `.stats.export` 권한을 부여합니다.
+```bash
+cd /volume1/web/3ds
+php82 artisan module:uninstall sirsoft-sales_stats      # 또는 관리자 > 모듈 관리에서 제거
+rm -rf modules/sirsoft-sales_stats
+cd modules
+git clone https://github.com/keidischoi/g7-module-custom-sales_stats.git custom-sales_stats
+cd /volume1/web/3ds
+php82 artisan extension:update-autoload
+php82 artisan module:install custom-sales_stats
+php82 artisan module:activate custom-sales_stats
+php82 artisan optimize:clear
+```
+
+그다음 필요한 관리자/역할에 `custom-sales_stats.viewer` 역할 또는 `custom-sales_stats.stats.view` / `.stats.export` 권한을 부여합니다.
 
 **데이터 손실은 없습니다.** 구 모듈에는 자체 테이블이나 마이그레이션이 없었습니다.
 
@@ -85,11 +148,12 @@ php82 vendor/bin/phpunit modules/custom-sales_stats/tests
 ```
 
 - `tests/Feature/StatsApiTest.php`: 인증·권한, 모듈 비활성, KST 경계·버킷, 이전 기간 비교, 취소 주문/옵션 제외, 카테고리 중복 제거, 판매자 순위·상세·주문·정산, 탈퇴 회원, CSV(BOM·수식 이스케이프·422)
+- `tests/Unit/PackagingTest.php`: 식별자 = 설치 폴더명(`custom-sales_stats`), 릴리스/패키지 zip 최상위 폴더, README 설치 경로
 - `tests/Unit/LayoutValidationTest.php`: 코어 레이아웃 규칙(`ValidLayoutStructure`, `WhitelistedEndpoint`, `NoExternalUrls`, `SafeLayoutExpressions`) + `?.`/`??` 금지, CSS 클래스, 번역 키, 라우트
 - 개인마켓 테이블은 `tests/fixtures/migrations`의 테스트용 스키마를 씁니다.
 
 ### 릴리스 워크플로
-`.github/workflow-templates/release.yml`에 있습니다. 사용하려면 `.github/workflows/release.yml`로 옮기세요. 옮기려면 `workflow` 권한이 필요합니다.
+`.github/workflow-templates/release.yml`에 있습니다. `main`의 버전 태그가 없으면 `custom-sales_stats-<버전>.zip`(최상위 폴더 `custom-sales_stats/`)을 만들어 릴리스합니다. 사용하려면 `.github/workflows/release.yml`로 옮기세요. 옮기려면 `workflow` 권한이 필요합니다.
 
 ## 제한사항
 
