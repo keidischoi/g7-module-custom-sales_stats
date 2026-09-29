@@ -1,15 +1,20 @@
 {
-    "name": "modules/sirsoft-sales_stats",
-    "description": "Sales statistics extension for sirsoft-ecommerce",
+    "name": "modules/custom-sales_stats",
+    "description": "Sales statistics for Gnuboard7 Ecommerce and User Markets",
     "type": "library",
-    "version": "1.4.1",
+    "version": "2.0.0",
     "license": "MIT",
     "require": {
         "php": "^8.2"
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Sirsoft\\SalesStats\\": "src/"
+            "Modules\\Custom\\SalesStats\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Custom\\SalesStats\\Tests\\": "tests/"
         }
     }
 }

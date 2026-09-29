@@ -1,0 +1,58 @@
+name: Release
+
+# main 에 올라온 module.json / plugin.json 버전에 태그(vX.Y.Z)가 없으면
+# G7 설치용 zip(<식별자>-<버전>.zip, 최상위 폴더 = 식별자)을 만들어 릴리즈합니다.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version
+        id: meta
+        run: |
+          f=module.json; kind=모듈
+          [ -f "$f" ] || { f=plugin.json; kind=플러그인; }
+          id=$(jq -r .identifier "$f"); ver=$(jq -r .version "$f")
+          echo "id=$id" >> "$GITHUB_OUTPUT"
+          echo "ver=$ver" >> "$GITHUB_OUTPUT"
+          echo "kind=$kind" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$ver" >/dev/null; then echo "exists=1" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Build zip and release
+        if: steps.meta.outputs.exists != '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ steps.meta.outputs.id }}
+          VER: ${{ steps.meta.outputs.ver }}
+          KIND: ${{ steps.meta.outputs.kind }}
+        run: |
+          zip="$ID-$VER.zip"
+          git archive --format=zip --prefix="$ID/" -o "$zip" HEAD
+          notes=""
+          if [ -f CHANGELOG.md ]; then
+            notes=$(awk -v v="$VER" '
+              /^## / { if (on) exit; if (index($0, v)) { on=1; next } }
+              on { print }' CHANGELOG.md | sed '/./,$!d')
+          fi
+          if [ -z "$notes" ]; then
+            prev=$(git describe --tags --abbrev=0 2>/dev/null || true)
+            if [ -n "$prev" ]; then log=$(git log --no-merges --format='- %s' "$prev..HEAD" | head -30)
+            else log=$(git log --no-merges -1 --format='- %s'); fi
+            notes="$log"
+          fi
+          case "$notes" in "#"*) ;; *) notes="## Changed
+          $notes" ;; esac
+          printf '%s\n\n## Notes\n%s %s 으로 업데이트 후 캐시 클리어 + 하드 리프레시.\n\nG7 설치용 zip: `%s`\n' \
+            "$notes" "$KIND" "$VER" "$zip" > notes.md
+          gh release create "v$VER" "$zip" --target "$GITHUB_SHA" --title "v$VER" --notes-file notes.md
