@@ -21,7 +21,7 @@ use Modules\Custom\SalesStats\Http\Controllers\Admin\StatsController;
 $view = 'permission:admin,custom-sales_stats.stats.view';
 $export = 'permission:admin,custom-sales_stats.stats.export';
 
-Route::middleware(['auth:sanctum', 'throttle:120,1', $view])->group(function () use ($export) {
+Route::middleware(['auth:sanctum', 'admin', 'throttle:120,1', $view])->group(function () use ($export) {
     Route::get('meta', [StatsController::class, 'meta'])->name('meta');
     Route::get('overview', [StatsController::class, 'overview'])->name('overview');
 

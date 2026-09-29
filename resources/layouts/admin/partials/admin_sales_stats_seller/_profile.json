@@ -1,0 +1,459 @@
+{
+  "meta": {
+    "is_partial": true,
+    "description": "판매자 상세 — 프로필 카드"
+  },
+  "id": "seller_profile",
+  "type": "basic",
+  "name": "Div",
+  "props": {
+    "className": "bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm p-5"
+  },
+  "children": [
+    {
+      "type": "basic",
+      "name": "Div",
+      "props": {
+        "className": "flex items-start gap-4 flex-wrap"
+      },
+      "children": [
+        {
+          "type": "basic",
+          "name": "Img",
+          "if": "{{!!((seller && seller.data && seller.data.profile) || {}).logo_url}}",
+          "props": {
+            "src": "{{((seller && seller.data && seller.data.profile) || {}).logo_url}}",
+            "alt": "",
+            "className": "w-16 h-16 rounded-full object-cover shrink-0"
+          }
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "if": "{{!((seller && seller.data && seller.data.profile) || {}).logo_url}}",
+          "props": {
+            "className": "w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center shrink-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Icon",
+              "props": {
+                "name": "store",
+                "className": "text-gray-400"
+              }
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "flex-1 min-w-0"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center gap-2 flex-wrap"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "H2",
+                  "props": {
+                    "className": "text-lg font-semibold text-gray-900 dark:text-white"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).shop_name || '-'}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "inline-flex px-2 py-1 rounded-md text-xs bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).seller_status_label}}"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "if": "{{!!((seller && seller.data && seller.data.profile) || {}).is_designated}}",
+                  "props": {
+                    "className": "inline-flex px-2 py-1 rounded-md text-xs bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300"
+                  },
+                  "text": "$t:custom-sales_stats.seller.designated"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "P",
+              "if": "{{!!((seller && seller.data && seller.data.profile) || {}).intro}}",
+              "props": {
+                "className": "mt-1 text-sm text-gray-600 dark:text-gray-300 whitespace-pre-line"
+              },
+              "text": "{{((seller && seller.data && seller.data.profile) || {}).intro}}"
+            },
+            {
+              "type": "basic",
+              "name": "P",
+              "if": "{{!!((seller && seller.data && seller.data.profile) || {}).status_reason}}",
+              "props": {
+                "className": "mt-1 text-xs text-red-600 dark:text-red-400"
+              },
+              "text": "{{((seller && seller.data && seller.data.profile) || {}).status_reason}}"
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-3 max-w-xs"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Div",
+                  "props": {
+                    "className": "flex items-center justify-between gap-2 min-w-0"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "props": {
+                        "className": "min-w-0"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Span",
+                          "props": {
+                            "className": "font-medium text-gray-900 dark:text-white truncate",
+                            "data-g7-user": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).uuid || ''}}",
+                            "data-g7-user-name": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).nickname || ''}}",
+                            "data-g7-user-click": "1"
+                          },
+                          "text": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).nickname || '-'}}"
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "if": "{{!!((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).email}}",
+                          "props": {
+                            "className": "text-xs text-gray-400 dark:text-gray-500 truncate"
+                          },
+                          "text": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).email}}"
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Div",
+                          "if": "{{!!(seller && seller.data && seller.data.profile && seller.data.profile.member) && !((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).uuid}}",
+                          "props": {
+                            "className": "text-xs text-gray-400 dark:text-gray-500"
+                          },
+                          "text": "$t:custom-sales_stats.member.withdrawn"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Div",
+                      "if": "{{!!((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).uuid}}",
+                      "props": {
+                        "className": "flex items-center gap-1 shrink-0"
+                      },
+                      "children": [
+                        {
+                          "type": "basic",
+                          "name": "Button",
+                          "props": {
+                            "type": "button",
+                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                            "title": "$t:custom-sales_stats.member.open"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Icon",
+                              "props": {
+                                "name": "user"
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "text": "$t:custom-sales_stats.member.info"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "click",
+                              "handler": "custom-sales_stats.openMember",
+                              "params": {
+                                "uuid": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).uuid}}"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "basic",
+                          "name": "Button",
+                          "props": {
+                            "type": "button",
+                            "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap",
+                            "title": "$t:custom-sales_stats.member.note_hint"
+                          },
+                          "children": [
+                            {
+                              "type": "basic",
+                              "name": "Icon",
+                              "props": {
+                                "name": "envelope"
+                              }
+                            },
+                            {
+                              "type": "basic",
+                              "name": "Span",
+                              "text": "$t:custom-sales_stats.member.note"
+                            }
+                          ],
+                          "actions": [
+                            {
+                              "type": "click",
+                              "handler": "custom-sales_stats.composeNote",
+                              "params": {
+                                "uuid": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).uuid}}",
+                                "name": "{{((seller && seller.data && seller.data.profile && seller.data.profile.member) || {}).nickname || ''}}"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "mt-3 flex items-center gap-2 flex-wrap"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "A",
+                  "props": {
+                    "href": "{{((seller && seller.data && seller.data.profile) || {}).shop_url}}",
+                    "target": "_blank",
+                    "className": "inline-flex items-center gap-1 px-2 py-1 text-xs rounded-md border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 whitespace-nowrap"
+                  },
+                  "children": [
+                    {
+                      "type": "basic",
+                      "name": "Icon",
+                      "props": {
+                        "name": "arrow-up-right-from-square"
+                      }
+                    },
+                    {
+                      "type": "basic",
+                      "name": "Span",
+                      "text": "$t:custom-sales_stats.seller.shop"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "basic",
+          "name": "Div",
+          "props": {
+            "className": "w-full md:w-72 rounded-lg bg-gray-50 dark:bg-gray-700 p-3"
+          },
+          "children": [
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.joined_at"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).joined_at || '-'}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.approved_at"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).approved_at || '-'}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.rating"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).review_count > 0 ? ('★ ' + ((seller && seller.data && seller.data.profile) || {}).rating + ' (' + ((seller && seller.data && seller.data.profile) || {}).review_count + ')') : '-'}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.sales_count"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).sales_count || 0}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.settled_total"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).settled_total_formatted + ' (' + (((seller && seller.data && seller.data.profile) || {}).settled_total_orders || 0) + ')'}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.last_settled_at"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).last_settled_at || '-'}}"
+                }
+              ]
+            },
+            {
+              "type": "basic",
+              "name": "Div",
+              "props": {
+                "className": "flex items-center justify-between gap-3 text-sm py-1"
+              },
+              "children": [
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-500 dark:text-gray-400"
+                  },
+                  "text": "$t:custom-sales_stats.seller.pending_reports"
+                },
+                {
+                  "type": "basic",
+                  "name": "Span",
+                  "props": {
+                    "className": "text-gray-900 dark:text-white text-right"
+                  },
+                  "text": "{{((seller && seller.data && seller.data.profile) || {}).pending_reports || 0}}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

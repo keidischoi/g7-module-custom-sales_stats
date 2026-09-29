@@ -1,81 +1,807 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "layout_name": "admin_sales_stats",
   "extends": "_admin_base",
+  "permissions": [
+    "custom-sales_stats.stats.view"
+  ],
   "meta": {
-    "title": "판매 통계",
-    "description": "일별 · 월별 · 연간 × 상품별 · 카테고리별",
-    "auth_required": true
-  },
-  "state": {
-    "period": "day",
-    "from": "",
-    "to": ""
-  },
-  "computed": {
-    "activePeriod": "{{query.period || _local.period || 'day'}}",
-    "fromDate": "{{query.from || _local.from || ''}}",
-    "toDate": "{{query.to || _local.to || ''}}"
+    "title": "$t:custom-sales_stats.title",
+    "description": "$t:custom-sales_stats.description"
   },
   "data_sources": [
     {
-      "id": "salesStats",
+      "id": "meta",
       "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/meta",
       "method": "GET",
-      "endpoint": "/api/modules/sirsoft-sales_stats",
       "auto_fetch": true,
       "auth_required": true,
-      "refetchOnMount": true,
       "params": {
-        "period": "{{query.period || 'day'}}",
         "from": "{{query.from || ''}}",
-        "to": "{{query.to || ''}}"
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
       },
       "fallback": {
         "data": {
-          "summary": {
-            "revenue": 0,
-            "order_count": 0,
-            "item_qty": 0,
-            "pending_payment": 0,
-            "shipping": 0,
-            "completed": 0,
-            "cancelled": 0,
-            "preparing": 0,
-            "payment_complete": 0
-          },
-          "by_period": [],
-          "by_product": [],
-          "by_category": []
+          "tabs": [
+            {
+              "id": "overview",
+              "label": "$t:custom-sales_stats.tabs.overview"
+            }
+          ],
+          "presets": [],
+          "filters": {},
+          "can": {},
+          "available": {},
+          "market_categories": []
         }
       },
       "errorHandling": {
-        "401": {
-          "handler": "toast",
-          "params": {
-            "message": "로그인이 필요합니다 (401)",
-            "variant": "error"
-          }
-        },
         "403": {
           "handler": "toast",
           "params": {
-            "message": "권한 없음 (403)",
-            "variant": "error"
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
           }
         },
         "404": {
           "handler": "toast",
           "params": {
-            "message": "API 라우트 없음 (404) — 모듈 활성화/route:clear 확인",
-            "variant": "error"
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
           }
         },
         "500": {
           "handler": "toast",
           "params": {
-            "message": "서버 오류 (500) — storage/logs 확인",
-            "variant": "error"
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "overview",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/overview",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'overview'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoSummary",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/summary",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoSeries",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/timeseries",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoProducts",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/products",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoCategories",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/categories",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoBuyers",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/buyers",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "ecoBreakdowns",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/ecommerce/breakdowns",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkSummary",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/summary",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkSeries",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/timeseries",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkSellers",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/sellers",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}",
+        "q": "{{query.q || ''}}",
+        "sort": "{{query.sort || ''}}",
+        "dir": "{{query.dir || ''}}",
+        "page": "{{query.page || ''}}",
+        "per_page": "20"
+      },
+      "fallback": {
+        "data": {
+          "rows": [],
+          "meta": {
+            "last_page": 1
+          }
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkListings",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/listings",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkBuyers",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/buyers",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": []
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkBreakdowns",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/breakdowns",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}"
+      },
+      "fallback": {
+        "data": {}
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
+          }
+        }
+      }
+    },
+    {
+      "id": "mkSettlements",
+      "type": "api",
+      "endpoint": "/api/modules/custom-sales_stats/market/settlements",
+      "method": "GET",
+      "auto_fetch": true,
+      "auth_required": true,
+      "if": "{{(query.tab || 'overview') === 'market'}}",
+      "params": {
+        "from": "{{query.from || ''}}",
+        "to": "{{query.to || ''}}",
+        "granularity": "{{query.granularity || ''}}",
+        "basis": "{{query.basis || ''}}",
+        "compare": "{{query.compare || ''}}",
+        "type": "{{query.type || ''}}",
+        "payment_mode": "{{query.payment_mode || ''}}",
+        "category": "{{query.category || ''}}",
+        "limit": "10"
+      },
+      "fallback": {
+        "data": {
+          "rows": [],
+          "snapshot": {}
+        }
+      },
+      "errorHandling": {
+        "403": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.forbidden"
+          }
+        },
+        "404": {
+          "handler": "toast",
+          "params": {
+            "type": "warning",
+            "message": "$t:custom-sales_stats.errors.unavailable"
+          }
+        },
+        "500": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.server"
+          }
+        },
+        "default": {
+          "handler": "toast",
+          "params": {
+            "type": "error",
+            "message": "$t:custom-sales_stats.errors.load_failed"
           }
         }
       }
@@ -84,766 +810,63 @@
   "slots": {
     "content": [
       {
-        "id": "page_root",
+        "id": "sales_stats_page",
         "type": "basic",
         "name": "Div",
         "props": {
-          "className": "admin-page-content"
+          "className": "admin-page-content-responsive"
         },
         "children": [
           {
-            "id": "page_header",
             "type": "basic",
             "name": "Div",
             "props": {
-              "className": "flex-start justify-between gap-4 mb-6 flex-wrap"
+              "className": "flex flex-col gap-6"
             },
             "children": [
               {
-                "id": "page_header_left",
+                "partial": "partials/admin_sales_stats/_header.json"
+              },
+              {
+                "partial": "partials/admin_sales_stats/_filters.json"
+              },
+              {
+                "partial": "partials/admin_sales_stats/_tabs.json"
+              },
+              {
+                "id": "sales_stats_overview_wrap",
                 "type": "basic",
                 "name": "Div",
+                "if": "{{(query.tab || 'overview') === 'overview'}}",
                 "children": [
                   {
-                    "type": "basic",
-                    "name": "H1",
-                    "props": {
-                      "className": "page-title mb-1"
-                    },
-                    "text": "판매 통계"
-                  },
-                  {
-                    "type": "basic",
-                    "name": "P",
-                    "props": {
-                      "className": "text-secondary text-sm"
-                    },
-                    "text": "통화: {{salesStats?.data?.currency?.code || 'KRW'}} ({{salesStats?.data?.currency?.symbol || '₩'}}) · 일별 · 월별 · 연간 × 상품·카테고리"
+                    "partial": "partials/admin_sales_stats/_tab_overview.json"
                   }
                 ]
               },
               {
-                "id": "page_header_actions",
+                "id": "sales_stats_ecommerce_wrap",
                 "type": "basic",
                 "name": "Div",
-                "props": {
-                  "className": "flex-center gap-2 flex-shrink-0"
-                },
+                "if": "{{(query.tab || 'overview') === 'ecommerce'}}",
                 "children": [
                   {
-                    "id": "btn_refresh",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "btn-icon",
-                      "aria-label": "새로고침"
-                    },
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {}
-                        }
-                      }
-                    ],
-                    "children": [
-                      {
-                        "type": "basic",
-                        "name": "Icon",
-                        "props": {
-                          "name": "refresh",
-                          "className": "w-5 h-5"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_export_period",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "flex-center gap-1.5 px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
-                    },
-                    "text": "CSV · 기간",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "downloadAttachment",
-                        "params": {
-                          "url": "/api/modules/sirsoft-sales_stats/export?type=period&period={{query.period || 'day'}}&from={{query.from || ''}}&to={{query.to || ''}}",
-                          "filename": "sales_stats_period.csv"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_export_product",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "flex-center gap-1.5 px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
-                    },
-                    "text": "CSV · 상품",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "downloadAttachment",
-                        "params": {
-                          "url": "/api/modules/sirsoft-sales_stats/export?type=product&period={{query.period || 'day'}}&from={{query.from || ''}}&to={{query.to || ''}}",
-                          "filename": "sales_stats_product.csv"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_export_category",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "flex-center gap-1.5 px-3 py-1.5 text-sm border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
-                    },
-                    "text": "CSV · 카테고리",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "downloadAttachment",
-                        "params": {
-                          "url": "/api/modules/sirsoft-sales_stats/export?type=category&period={{query.period || 'day'}}&from={{query.from || ''}}&to={{query.to || ''}}",
-                          "filename": "sales_stats_category.csv"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "filter_bar",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "flex flex-col gap-3 mb-6 p-3 md:p-4 rounded-xl border bg-card"
-            },
-            "children": [
-              {
-                "id": "filter_row_period",
-                "type": "basic",
-                "name": "Div",
-                "props": {
-                  "className": "flex flex-wrap items-center gap-2"
-                },
-                "children": [
-                  {
-                    "type": "basic",
-                    "name": "Span",
-                    "props": {
-                      "className": "text-sm font-medium text-secondary mr-1 min-w-[4.5rem]"
-                    },
-                    "text": "집계 단위"
-                  },
-                  {
-                    "id": "btn_period_day",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-3 py-1.5 text-sm rounded-lg {{(query.period || 'day') === 'day' ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900' : 'bg-gray-100 dark:bg-gray-800'}}"
-                    },
-                    "text": "일별",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "period": "day"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_period_month",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-3 py-1.5 text-sm rounded-lg {{query.period === 'month' ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900' : 'bg-gray-100 dark:bg-gray-800'}}"
-                    },
-                    "text": "월별",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "period": "month"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_period_year",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-3 py-1.5 text-sm rounded-lg {{query.period === 'year' ? 'bg-gray-900 text-white dark:bg-white dark:text-gray-900' : 'bg-gray-100 dark:bg-gray-800'}}"
-                    },
-                    "text": "연간",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "period": "year"
-                          }
-                        }
-                      }
-                    ]
+                    "partial": "partials/admin_sales_stats/_tab_ecommerce.json"
                   }
                 ]
               },
               {
-                "id": "filter_row_date",
+                "id": "sales_stats_market_wrap",
                 "type": "basic",
                 "name": "Div",
-                "props": {
-                  "className": "flex flex-wrap items-center gap-2"
-                },
+                "if": "{{(query.tab || 'overview') === 'market'}}",
                 "children": [
                   {
-                    "type": "basic",
-                    "name": "Span",
-                    "props": {
-                      "className": "text-sm font-medium text-secondary mr-1 min-w-[4.5rem]"
-                    },
-                    "text": "기간"
-                  },
-                  {
-                    "id": "input_from",
-                    "type": "basic",
-                    "name": "Input",
-                    "props": {
-                      "type": "date",
-                      "className": "px-2 py-1.5 text-sm border rounded-lg bg-background",
-                      "value": "{{query.from || ''}}"
-                    },
-                    "actions": [
-                      {
-                        "type": "change",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{event.target.value || event.value || ''}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "basic",
-                    "name": "Span",
-                    "props": {
-                      "className": "text-sm text-secondary"
-                    },
-                    "text": "~"
-                  },
-                  {
-                    "id": "input_to",
-                    "type": "basic",
-                    "name": "Input",
-                    "props": {
-                      "type": "date",
-                      "className": "px-2 py-1.5 text-sm border rounded-lg bg-background",
-                      "value": "{{query.to || ''}}"
-                    },
-                    "actions": [
-                      {
-                        "type": "change",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "to": "{{event.target.value || event.value || ''}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_today",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "오늘",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{new Date().toISOString().slice(0, 10)}}",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_week",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "7일",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{new Date(Date.now() - 6*86400000).toISOString().slice(0, 10)}}",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_month",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "30일",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{new Date(Date.now() - 29*86400000).toISOString().slice(0, 10)}}",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_3m",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "3개월",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{new Date(new Date().setMonth(new Date().getMonth()-3)).toISOString().slice(0, 10)}}",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_year",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "1년",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "{{new Date(new Date().setFullYear(new Date().getFullYear()-1)).toISOString().slice(0, 10)}}",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "id": "btn_preset_all",
-                    "type": "basic",
-                    "name": "Button",
-                    "props": {
-                      "className": "px-2.5 py-1.5 text-xs rounded-lg bg-gray-100 dark:bg-gray-800"
-                    },
-                    "text": "전체",
-                    "actions": [
-                      {
-                        "type": "click",
-                        "handler": "navigate",
-                        "params": {
-                          "path": "/admin/ecommerce/sales-stats",
-                          "mergeQuery": true,
-                          "query": {
-                            "from": "2020-01-01",
-                            "to": "{{new Date().toISOString().slice(0, 10)}}"
-                          }
-                        }
-                      }
-                    ]
+                    "partial": "partials/admin_sales_stats/_tab_market.json"
                   }
                 ]
               }
             ]
-          },
-          {
-            "id": "summary_grid",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-3 md:gap-4 mb-6"
-            },
-            "children": [
-              {
-                "id": "stat_revenue",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "총 매출 ({{salesStats?.data?.currency?.code || ''}})",
-                  "value": "{{salesStats?.data?.summary?.revenue_formatted || salesStats?.data?.summary?.revenue || 0}}",
-                  "iconName": "trending-up",
-                  "trend": "neutral"
-                }
-              },
-              {
-                "id": "stat_orders",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "주문 수",
-                  "value": "{{salesStats?.data?.summary?.order_count ?? 0}}",
-                  "iconName": "shopping-cart",
-                  "trend": "neutral"
-                }
-              },
-              {
-                "id": "stat_qty",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "판매 수량",
-                  "value": "{{salesStats?.data?.summary?.item_qty ?? 0}}",
-                  "iconName": "package",
-                  "trend": "neutral"
-                }
-              },
-              {
-                "id": "stat_pending",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "결제대기",
-                  "value": "{{salesStats?.data?.summary?.pending_payment ?? 0}}",
-                  "iconName": "clock",
-                  "trend": "neutral"
-                }
-              },
-              {
-                "id": "stat_shipping",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "배송중",
-                  "value": "{{salesStats?.data?.summary?.shipping ?? 0}}",
-                  "iconName": "truck",
-                  "trend": "neutral"
-                }
-              },
-              {
-                "id": "stat_completed",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "완료",
-                  "value": "{{salesStats?.data?.summary?.completed ?? 0}}",
-                  "iconName": "check-circle",
-                  "trend": "up"
-                }
-              },
-              {
-                "id": "stat_cancelled",
-                "type": "composite",
-                "name": "StatCard",
-                "props": {
-                  "label": "취소",
-                  "value": "{{salesStats?.data?.summary?.cancelled ?? 0}}",
-                  "iconName": "x-circle",
-                  "trend": "down"
-                }
-              }
-            ]
-          },
-          {
-            "id": "charts_row",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "grid grid-cols-1 lg:grid-cols-5 gap-4 mb-6"
-            },
-            "children": [
-              {
-                "id": "chart_period_card",
-                "type": "basic",
-                "name": "Div",
-                "props": {
-                  "className": "lg:col-span-3 rounded-xl border bg-card p-4 md:p-5"
-                },
-                "children": [
-                  {
-                    "type": "basic",
-                    "name": "H3",
-                    "props": {
-                      "className": "text-base font-semibold mb-4"
-                    },
-                    "text": "기간별 매출 그래프"
-                  },
-                  {
-                    "id": "chart_period_bar",
-                    "type": "composite",
-                    "name": "BarChart",
-                    "props": {
-                      "height": 260,
-                      "showLegend": true,
-                      "showYGrid": true,
-                      "showYAxis": true,
-                      "labels": "{{(salesStats?.data?.by_period ?? []).map(d => d.period)}}",
-                      "datasets": "{{[{ label: '매출', data: (salesStats?.data?.by_period ?? []).map(d => Number(d.revenue ?? 0)), backgroundColor: '#7C3AED', borderRadius: 6 }, { label: '주문 수', data: (salesStats?.data?.by_period ?? []).map(d => Number(d.order_count ?? 0)), backgroundColor: '#DDD6FE', borderRadius: 6, yAxisID: 'y1' }]}}"
-                    }
-                  }
-                ]
-              },
-              {
-                "id": "chart_category_card",
-                "type": "basic",
-                "name": "Div",
-                "props": {
-                  "className": "lg:col-span-2 rounded-xl border bg-card p-4 md:p-5 flex flex-col"
-                },
-                "children": [
-                  {
-                    "type": "basic",
-                    "name": "H3",
-                    "props": {
-                      "className": "text-base font-semibold mb-4"
-                    },
-                    "text": "카테고리별 비중"
-                  },
-                  {
-                    "id": "chart_category_donut",
-                    "type": "composite",
-                    "name": "DonutChart",
-                    "props": {
-                      "size": 220,
-                      "showLegend": true,
-                      "cutout": "65%",
-                      "centerLabel": "총 매출",
-                      "centerValue": "{{salesStats?.data?.summary?.revenue_formatted || salesStats?.data?.summary?.revenue || 0}}",
-                      "data": "{{(salesStats?.data?.by_category ?? []).map((d, i) => ({ name: d.category_name || '미분류', value: Number(d.revenue ?? 0), color: ['#7C3AED','#EC4899','#3B82F6','#10B981','#F59E0B','#EF4444','#6366F1','#14B8A6'][i % 8] }))}}",
-                      "className": "mx-auto"
-                    }
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "id": "section_period",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "rounded-xl border bg-card p-4 md:p-5 mb-6"
-            },
-            "children": [
-              {
-                "type": "basic",
-                "name": "H3",
-                "props": {
-                  "className": "text-base font-semibold mb-4"
-                },
-                "text": "기간별 매출"
-              },
-              {
-                "id": "grid_period",
-                "type": "composite",
-                "name": "DataGrid",
-                "props": {
-                  "data": "{{salesStats?.data?.by_period || []}}",
-                  "pagination": false,
-                  "emptyMessage": "해당 기간 데이터가 없습니다",
-                  "columns": [
-                    {
-                      "field": "period",
-                      "header": "기간",
-                      "width": "30%"
-                    },
-                    {
-                      "field": "order_count",
-                      "header": "주문 수",
-                      "width": "20%"
-                    },
-                    {
-                      "field": "item_qty",
-                      "header": "판매 수량",
-                      "width": "20%"
-                    },
-                    {
-                      "field": "revenue_formatted",
-                      "header": "매출액",
-                      "width": "30%"
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "id": "section_product",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "rounded-xl border bg-card p-4 md:p-5 mb-6"
-            },
-            "children": [
-              {
-                "type": "basic",
-                "name": "H3",
-                "props": {
-                  "className": "text-base font-semibold mb-4"
-                },
-                "text": "상품별 매출 (상위)"
-              },
-              {
-                "id": "grid_product",
-                "type": "composite",
-                "name": "DataGrid",
-                "props": {
-                  "data": "{{salesStats?.data?.by_product || []}}",
-                  "pagination": true,
-                  "pageSize": 10,
-                  "emptyMessage": "상품 매출 데이터가 없습니다",
-                  "columns": [
-                    {
-                      "field": "product_name",
-                      "header": "상품명",
-                      "width": "40%"
-                    },
-                    {
-                      "field": "order_count",
-                      "header": "주문 수",
-                      "width": "15%"
-                    },
-                    {
-                      "field": "item_qty",
-                      "header": "판매 수량",
-                      "width": "15%"
-                    },
-                    {
-                      "field": "revenue_formatted",
-                      "header": "매출액",
-                      "width": "30%"
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "id": "section_category",
-            "type": "basic",
-            "name": "Div",
-            "props": {
-              "className": "rounded-xl border bg-card p-4 md:p-5 mb-6"
-            },
-            "children": [
-              {
-                "type": "basic",
-                "name": "H3",
-                "props": {
-                  "className": "text-base font-semibold mb-4"
-                },
-                "text": "카테고리별 매출"
-              },
-              {
-                "id": "grid_category",
-                "type": "composite",
-                "name": "DataGrid",
-                "props": {
-                  "data": "{{salesStats?.data?.by_category || []}}",
-                  "pagination": false,
-                  "emptyMessage": "카테고리 매출 데이터가 없습니다",
-                  "columns": [
-                    {
-                      "field": "category_name",
-                      "header": "카테고리",
-                      "width": "40%"
-                    },
-                    {
-                      "field": "order_count",
-                      "header": "주문 수",
-                      "width": "15%"
-                    },
-                    {
-                      "field": "item_qty",
-                      "header": "판매 수량",
-                      "width": "15%"
-                    },
-                    {
-                      "field": "revenue_formatted",
-                      "header": "매출액",
-                      "width": "30%"
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          {
-            "id": "footer_hint",
-            "type": "basic",
-            "name": "P",
-            "props": {
-              "className": "text-xs text-secondary"
-            },
-            "text": "※ 결제완료·배송·구매확정 등 매출 반영 상태만 집계합니다. (pending_payment / cancelled 제외)"
           }
         ]
       }

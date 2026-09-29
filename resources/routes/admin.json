@@ -1,17 +1,39 @@
 {
-  "version": "1.0.0",
-  "routes": [
-    {
-      "path": "*/admin/ecommerce/sales-stats",
-      "layout": "admin_sales_stats",
-      "auth_required": true,
-      "meta": {
-        "title": "판매 통계",
-        "breadcrumb": [
-          { "label": "이커머스", "path": "/admin/ecommerce/products" },
-          { "label": "판매 통계" }
-        ]
-      }
-    }
-  ]
+    "version": "2.0.0",
+    "routes": [
+        {
+            "path": "*/admin/sales-stats",
+            "layout": "admin_sales_stats",
+            "auth_required": true,
+            "meta": {
+                "title": "$t:custom-sales_stats.title",
+                "breadcrumb": [
+                    { "label": "$t:custom-sales_stats.title" }
+                ]
+            }
+        },
+        {
+            "path": "*/admin/ecommerce/sales-stats",
+            "layout": "admin_sales_stats",
+            "auth_required": true,
+            "meta": {
+                "title": "$t:custom-sales_stats.title",
+                "breadcrumb": [
+                    { "label": "$t:custom-sales_stats.title", "path": "/admin/sales-stats" }
+                ]
+            }
+        },
+        {
+            "path": "*/admin/sales-stats/sellers/:userId",
+            "layout": "admin_sales_stats_seller",
+            "auth_required": true,
+            "meta": {
+                "title": "$t:custom-sales_stats.seller.title",
+                "breadcrumb": [
+                    { "label": "$t:custom-sales_stats.title", "path": "/admin/sales-stats" },
+                    { "label": "$t:custom-sales_stats.breadcrumb.sellers" }
+                ]
+            }
+        }
+    ]
 }
